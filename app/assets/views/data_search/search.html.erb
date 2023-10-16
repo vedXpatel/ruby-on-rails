@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date Search</title>
+</head>
+<body>
+  <h1>Search for Dates in .docx Files</h1>
+
+  <%= form_tag(date_search_search_path, method: 'get') do %>
+    <%= label_tag :root_directory, 'Enter root directory:' %>
+    <%= text_field_tag :root_directory %>
+    <%= submit_tag 'Search' %>
+  <% end %>
+
+  <h2>Search Results</h2>
+
+  <% if @results.present? %>
+    <% @results[:valid_dates].each do |result| %>
+      <h3><%= result[:path] %></h3>
+      <p>There are no abnormal entries on <%= result[:date] %>.</p>
+      <p><%= result[:content] %></p>
+    <% end %>
+
+    <% @results[:invalid_dates].each do |result| %>
+      <h3><%= result[:path] %></h3>
+      <p>There are abnormal entries on <%= result[:date] %>.</p>
+      <p><%= result[:content] %></p>
+    <% end %>
+  <% else %>
+    <p>No results found.</p>
+  <% end %>
+</body>
+</html>
